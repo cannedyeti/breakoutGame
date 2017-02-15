@@ -1,6 +1,6 @@
 var EDGE_THICKNESS = 10;
 var bricks;
-var COLUMNS = 10;
+var COLUMNS = 9 ;
 var ROWS = 6;
 var red, green, blue, topEdge, leftEdge, rightEdge, bottomEdge;
 var BRICK_MARGIN = 25;
@@ -8,11 +8,15 @@ var BRICK_W = 50;
 var BRICK_H = 20;
 var MAX_SPEED = 12;
 var lives = 3;
+var canvasW = window.innerWidth;
+var canvasH = window.innerHeight;
+
+
 
 $(".lives > h2").text(lives + " lives");
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+	createCanvas(canvasW, canvasH);
 	paddle = createSprite(width/2, height-30, 100, 10);
   	paddle.immovable = true;
 
@@ -55,8 +59,7 @@ function draw() {
 	ball.bounce(leftEdge);
 	ball.bounce(rightEdge);
 	// IMPLIMENT TO TEST
-	// ball.bounce(bottomEdge);
-
+	ball.bounce(bottomEdge);
 	if(ball.bounce(bottomEdge)){
 		ball.remove();
 		lives--;
@@ -67,39 +70,37 @@ function draw() {
 			$(".lives > h2").text("You fucking suck");
 		}
 	}
-
 	if(ball.bounce(paddle)) {
-		var change = (ball.position.x-paddle.position.x)/3;
+		var change = (ball.position.x-paddle.position.x)/2;
 		MAX_SPEED = MAX_SPEED * 1.01;
 		ball.setSpeed(MAX_SPEED, ball.getDirection() + change);
 	}
 	ball.bounce(bricks, brickHit);
 	drawSprites();
 }
-
+//START BALL
 function mousePressed() {
-
   if(ball.velocity.x == 0 && ball.velocity.y == 0 && lives >= 0)
     ball.setSpeed(MAX_SPEED, random(90-10, 90+10));
+	$(".start").hide();
 }
-
+// WIN/RemoveBrick
+function brickHit(ball, brick) {
+	brick.remove();
+	checkWin();
+}
 function checkWin() {
 	if (bricks == "") {
 		$(".lives > h2").text("You fucking did it.");
+		ball.remove();
 	} else if (lives <= 0) {
 		$(".lives > h2").text("You fucking suck");
 		ball.remove();
 	}
 }
-
-function brickHit(ball, brick) {
-	brick.remove();
-	console.log(bricks);
-	checkWin();
-}
-
+// Create a Ball
 function createBall() {
-	ball = createSprite(width/2, height-80, 11, 11);
+	ball = createSprite(width/2, height-150, 11, 11);
     ball.shapeColor = (255, 255, 255);
   	ball.maxSpeed = MAX_SPEED;
 }

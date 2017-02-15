@@ -3,12 +3,30 @@
 	color: white;
 	position: absolute;
 	z-index: 2;
-	left: 20px;
-	top: 20px;
+	left: 0;
+	top: 0;
+	width: 100%;
 
 }
 
-h2 {
-	padding: 10px 20px 10px 20px;
+.status {
+	text-align: center;
+	font-size: 30px;
 }
 
+.start {
+	background-color: rgba(0, 0, 0, .8);
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+	text-align: center;
+}
+
+.title {
+	padding-top: 100px;
+	padding-bottom: 150px;
+	font-size: 100px;
+}
