@@ -1,0 +1,14 @@
+.lives {
+	background-color: rgba(0, 0, 0, .3);
+	color: white;
+	position: absolute;
+	z-index: 2;
+	left: 20px;
+	top: 20px;
+
+}
+
+h2 {
+	padding: 10px 20px 10px 20px;
+}
+
