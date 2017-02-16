@@ -10,6 +10,7 @@ var MAX_SPEED = 12;
 var lives = 3;
 var canvasW = window.innerWidth;
 var canvasH = window.innerHeight;
+var boing = $(".boing");
 
 
 
@@ -31,12 +32,11 @@ function setup() {
 
 	bottomEdge = createSprite(width/2, height+EDGE_THICKNESS/2, width+ EDGE_THICKNESS*2, EDGE_THICKNESS);
 	bottomEdge.immovable = true
+	
+	var offsetX = width/2-(COLUMNS-1)*(BRICK_MARGIN+BRICK_W)/2;  	
+	var offsetY = 90;
 
 	bricks = new Group();
-
-	var offsetX = width/2-(COLUMNS-1)*(BRICK_MARGIN+BRICK_W)/2;
-  	var offsetY = 90;
-
 	for(var r = 0; r<ROWS; r++)
     	for(var c = 0; c<COLUMNS; c++) {
       		var brick = createSprite(offsetX+c*(BRICK_W+BRICK_MARGIN), offsetY+r*(BRICK_H+BRICK_MARGIN), BRICK_W, BRICK_H);
@@ -59,20 +59,28 @@ function draw() {
 	ball.bounce(leftEdge);
 	ball.bounce(rightEdge);
 	// IMPLIMENT TO TEST
-	ball.bounce(bottomEdge);
+	// ball.bounce(bottomEdge);
 	if(ball.bounce(bottomEdge)){
 		ball.remove();
 		lives--;
 		createBall();
 		$(".lives > h2").text(lives + " lives");
+		if (lives == 1) {
+			$(".lives > h2").text(lives + " life");
+		}
 		if(lives == 0) {
 			ball.remove();
-			$(".lives > h2").text("You fucking suck");
+			$(".lives > h2").text("You fucking suck. Try again?");
+			noLoop();
+			$(".start").show();
+			$(".sub").hide();
+			$(".reset").css("display", "inline-block");
 		}
 	}
 	if(ball.bounce(paddle)) {
 		var change = (ball.position.x-paddle.position.x)/2;
 		MAX_SPEED = MAX_SPEED * 1.01;
+		boing[0].play();
 		ball.setSpeed(MAX_SPEED, ball.getDirection() + change);
 	}
 	ball.bounce(bricks, brickHit);
@@ -80,9 +88,13 @@ function draw() {
 }
 //START BALL
 function mousePressed() {
-  if(ball.velocity.x == 0 && ball.velocity.y == 0 && lives >= 0)
-    ball.setSpeed(MAX_SPEED, random(90-10, 90+10));
-	$(".start").hide();
+	if(lives > 0) {
+  		if(ball.velocity.x == 0 && ball.velocity.y == 0 && lives >= 0)
+    	ball.setSpeed(MAX_SPEED, random(90-10, 90+10));
+		$(".start").hide();
+	} else {
+
+	}
 }
 // WIN/RemoveBrick
 function brickHit(ball, brick) {
@@ -104,3 +116,7 @@ function createBall() {
     ball.shapeColor = (255, 255, 255);
   	ball.maxSpeed = MAX_SPEED;
 }
+
+$(".reset").click(function(){
+	location.reload();
+})

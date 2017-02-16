@@ -2,7 +2,7 @@
 	background-color: rgba(0, 0, 0, .3);
 	color: white;
 	position: absolute;
-	z-index: 2;
+	z-index: 3;
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -12,6 +12,8 @@
 .status {
 	text-align: center;
 	font-size: 30px;
+	z-index: 3;
+	color: white;
 }
 
 .start {
@@ -21,12 +23,28 @@
 	top: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 2;
+	z-index: 1;
 	text-align: center;
+	color: white;
 }
 
 .title {
 	padding-top: 100px;
 	padding-bottom: 150px;
 	font-size: 100px;
+	z-index: 6;
+}
+
+
+.reset {
+	margin-top: 20px;
+	display: none;
+	border: none;
+	z-index: 3;
+}
+
+.reset:hover {
+	background-color: black;
+	color: white;
+	z-index: 3;
 }
